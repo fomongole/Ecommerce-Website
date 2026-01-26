@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { RealTimeProductGrid } from "@/features/products/components/RealTimeProductGrid"; 
@@ -34,7 +35,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Visual/Image Area (Abstract pattern to save load time/space) */}
+            {/* Visual/Image Area */}
             <div className="flex-1 w-full max-w-md lg:max-w-full">
               <div className="aspect-[16/9] lg:aspect-[2/1] rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-50 dark:from-blue-900/20 dark:to-slate-900 border border-blue-100 dark:border-slate-800 flex items-center justify-center overflow-hidden relative">
                 <div className="absolute inset-0 bg-grid-slate-200/50 dark:bg-grid-slate-800/50 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
@@ -45,12 +46,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* 2. PRODUCTS SECTION (Moved Up) */}
+      {/* 2. PRODUCTS SECTION */}
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="flex items-end justify-between mb-8">
@@ -63,7 +63,10 @@ export default function Home() {
             </Link>
           </div>
           
-          <RealTimeProductGrid />
+          {/* Wrapped Grid in Suspense to handle useSearchParams() */}
+          <Suspense fallback={<div className="h-96 flex items-center justify-center italic text-slate-400">Loading products...</div>}>
+            <RealTimeProductGrid />
+          </Suspense>
           
         </div>
       </section>
