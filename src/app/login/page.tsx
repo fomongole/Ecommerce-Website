@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2, Lock, Mail } from "lucide-react";
 import Link from "next/link";
@@ -13,11 +13,15 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
-export default function LoginPage() {
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Enterprise Logic: Get return URL or default to home
+  const redirectUrl = searchParams.get("redirect") || "/";
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +30,7 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success("Welcome back!");
-      router.push("/"); // Redirect to home
+      router.push(redirectUrl);
     } catch (error: any) {
       console.error(error);
       toast.error("Invalid email or password");
@@ -89,7 +93,8 @@ export default function LoginPage() {
 
             <div className="text-center text-sm text-slate-500 mt-4">
               Don&apos;t have an account?{" "}
-              <Link href="/register" className="text-blue-600 hover:underline font-medium">
+              {/* Pass the redirect parameter to registration too if needed */}
+              <Link href={`/register?redirect=${encodeURIComponent(redirectUrl)}`} className="text-blue-600 hover:underline font-medium">
                 Sign up
               </Link>
             </div>
@@ -97,5 +102,14 @@ export default function LoginPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+// Wrap in Suspense because we use useSearchParams()
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

@@ -21,13 +21,22 @@ import { checkoutSchema, CheckoutFormData } from "@/lib/validator";
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, getCartTotal, clearCart } = useCartStore();
-  const { user } = useAuthStore();
+  const { user, isLoading } = useAuthStore();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
+  // 1. Initialize Client
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  // 2. SECURITY CHECK: Redirect if not logged in
+  useEffect(() => {
+    if (!isLoading && !user) {
+      toast.error("You must be logged in to checkout");
+      router.push("/login?redirect=/checkout");
+    }
+  }, [user, isLoading, router]);
 
   const total = getCartTotal();
 
@@ -43,14 +52,19 @@ export default function CheckoutPage() {
   });
 
   const onSubmit = async (data: CheckoutFormData) => {
+    // 3. DOUBLE CHECK: Prevent submission if auth lost
+    if (!user) {
+      toast.error("Authentication session expired.");
+      router.push("/login?redirect=/checkout");
+      return;
+    }
+
     setIsProcessing(true);
     
     try {
-      // 2. Initialize a Write Batch
       const batch = writeBatch(db);
-
-      // 3. Create the Order Object
-      const orderRef = doc(collection(db, "orders")); // Generate ID first
+      const orderRef = doc(collection(db, "orders"));
+      
       const orderData = {
         customer: {
           name: `${data.firstName} ${data.lastName}`,
@@ -68,23 +82,19 @@ export default function CheckoutPage() {
         })),
         total: total,
         status: "pending",
-        userId: user?.uid || "guest",
+        userId: user.uid, // STRICT: No "guest" fallback
         createdAt: Date.now(),
       };
 
-      // 4. Add "Create Order" to batch
       batch.set(orderRef, orderData);
 
-      // 5. Add "Decrement Stock" for EACH item to batch
       items.forEach((item) => {
         const productRef = doc(db, "products", item.id);
-        // decrement(x) is safe - prevents race conditions
         batch.update(productRef, {
           stock: increment(-item.quantity)
         });
       });
 
-      // 6. Commit the Batch (All or Nothing)
       await batch.commit();
 
       toast.success("Order placed successfully!");
@@ -99,7 +109,18 @@ export default function CheckoutPage() {
     }
   };
 
-  if (!isClient) return null;
+  // 4. PREVENT FLASH: Show loader while checking auth
+  if (!isClient || isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+      </div>
+    );
+  }
+
+  // 5. If finished loading and no user, the useEffect will trigger redirect.
+  // Return null to ensure the restricted content never renders.
+  if (!user) return null;
 
   if (items.length === 0) {
     return (
