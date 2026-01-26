@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Enterprise Ecommerce Platform
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-15-black) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue) ![Firebase](https://img.shields.io/badge/Firebase-Auth%20%26%20Firestore-orange) ![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38bdf8)
 
-First, run the development server:
+A production-ready, full-stack e-commerce application built with **Next.js 15 (App Router)**. This project features a high-performance storefront for customers and a comprehensive "Back Office" admin dashboard for business management, powered by Firebase and Cloudinary.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Key Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🛒 Storefront (Customer Experience)
+* **Real-Time Inventory:** Browse products fetched instantly from Firestore.
+* **Dynamic Product Pages:** SEO-friendly individual product details `[id]` pages.
+* **Persistent Cart:** Robust cart system using Zustand (persisted to local storage).
+* **Checkout Flow:** Validated checkout forms using `react-hook-form` and `zod`.
+* **Smart Stock Management:** Automatic stock deduction upon purchase using Firestore Transactions/Batch writes.
+* **User Profiles:** Order history tracking and detailed receipt views.
+* **Search & Filter:** Instant search capability via URL parameters.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🛡️ Admin Dashboard (Business Logic)
+* **Role-Based Access Control (RBAC):** Secure Admin Guard that strictly enforces `admin` roles via Firestore.
+* **Analytics Dashboard:** Real-time overview of Total Revenue, Orders Count, and Active Inventory.
+* **Product Management:** Full CRUD (Create, Read, Update, Delete) for products with image uploads.
+* **Order Management:** View customer orders, update status (Pending -> Processing -> Completed), and view shipping details.
+* **Customer Insights:** Track customer lifetime value and order frequency.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+* **Framework:** Next.js 15 (App Router)
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS + Shadcn UI (Radix Primitives)
+* **Backend / Database:** Firebase (Firestore & Authentication)
+* **State Management:** Zustand
+* **Form Validation:** React Hook Form + Zod
+* **Image Storage:** Cloudinary
+* **Icons:** Lucide React
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
