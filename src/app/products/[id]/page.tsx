@@ -2,18 +2,17 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Check, Shield, Truck, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { doc, getDoc } from "firebase/firestore"; // Import Firestore functions
+import { doc, getDoc } from "firebase/firestore";
 
-import { db } from "@/lib/firebase"; // Import DB
+import { db } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/features/products/components/AddToCartButton";
 import { Product } from "@/types";
 
 interface ProductPageProps {
-  params: Promise<{ id: string }>; // Next.js 15 params are async
+  params: Promise<{ id: string }>;
 }
 
-// 1. Fetch Product Helper
 async function getProduct(id: string) {
   try {
     const docRef = doc(db, "products", id);
@@ -48,7 +47,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  // Ensure we have an image URL, fallback if missing
   const mainImage = product.images && product.images.length > 0 ? product.images[0] : "/placeholder.png";
 
   return (
