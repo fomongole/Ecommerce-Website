@@ -26,7 +26,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"; // Import Alert Dialog
+} from "@/components/ui/alert-dialog";
 
 const sidebarLinks = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
