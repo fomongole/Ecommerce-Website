@@ -20,7 +20,7 @@ import { CartItem } from "./CartItem";
 export function CartSheet() {
   const { items, getCartTotal, getItemCount } = useCartStore();
   const { user } = useAuthStore();
-  const [open, setOpen] = useState(false); // Controls sheet visibility
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   
   const itemCount = getItemCount();
@@ -28,8 +28,8 @@ export function CartSheet() {
   const handleProceedToCheckout = () => {
     if (!user) {
       toast.error("Please sign in to complete your order.");
-      setOpen(false); // Close the cart sheet
-      // Redirect to login, but tell it to come back to checkout afterwards
+      setOpen(false);
+      // Redirect to login, but come back to checkout afterwards
       router.push("/login?redirect=/checkout");
       return;
     }
@@ -92,7 +92,6 @@ export function CartSheet() {
               Shipping and taxes calculated at checkout.
             </p>
             
-            {/* Logic-based button instead of direct Link */}
             <Button 
               size="lg" 
               className="w-full h-12 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white"
