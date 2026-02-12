@@ -35,7 +35,6 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          {/* 2. Wrap everything inside AuthProvider */}
           <AuthProvider>
             <Navbar />
             {children}
