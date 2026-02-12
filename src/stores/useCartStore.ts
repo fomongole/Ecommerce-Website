@@ -35,7 +35,7 @@ export const useCartStore = create<CartState>()(
           set({ items: [...items, { ...product, quantity: 1 }] });
         }
         
-        toast.success("Added to cart"); // Show success message
+        toast.success("Added to cart");
       },
 
       removeItem: (productId) => {
