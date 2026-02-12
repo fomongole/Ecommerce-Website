@@ -16,7 +16,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface Customer {
-  id: string; // We'll use email as ID for uniqueness in this view
+  id: string;
   name: string;
   email: string;
   address: string;
