@@ -10,7 +10,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  isLoading: true, // Start true so we don't flash "Login" content if they are already logged in
+  isLoading: true,
   setUser: (user) => set({ user }),
   setLoading: (isLoading) => set({ isLoading }),
 }));
