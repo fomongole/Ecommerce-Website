@@ -7,7 +7,7 @@ import { ChevronLeft, Loader2, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { use } from "react"; // Required for unpacking params in Next 15
+import { use } from "react";
 
 import { db } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
@@ -28,11 +28,11 @@ interface EditProductPageProps {
 }
 
 export default function EditProductPage({ params }: EditProductPageProps) {
-  const { id } = use(params); // Unpack params in Next.js 15
+  const { id } = use(params);
   const router = useRouter();
   
-  const [fetching, setFetching] = useState(true); // Loading initial data
-  const [saving, setSaving] = useState(false); // Saving updates
+  const [fetching, setFetching] = useState(true); 
+  const [saving, setSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [image, setImage] = useState<string | null>(null);
 
@@ -75,7 +75,6 @@ export default function EditProductPage({ params }: EditProductPageProps) {
     fetchProduct();
   }, [id, router]);
 
-  // 2. Handle Image Replacement (Same logic as Add Page)
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -109,7 +108,6 @@ export default function EditProductPage({ params }: EditProductPageProps) {
     }
   };
 
-  // 3. Handle Update
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!image) return toast.error("Product must have an image");
@@ -125,8 +123,8 @@ export default function EditProductPage({ params }: EditProductPageProps) {
         price: parseFloat(price),
         category,
         stock: parseInt(stock),
-        images: [image], // Update the image array
-        updatedAt: Date.now(), // Track when it was updated
+        images: [image],
+        updatedAt: Date.now(),
       });
 
       toast.success("Product updated successfully!");
