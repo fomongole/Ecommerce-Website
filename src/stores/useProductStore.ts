@@ -6,7 +6,7 @@ import { Product } from "@/types";
 interface ProductState {
   products: Product[];
   isLoading: boolean;
-  lastFetched: number; // Timestamp to know when we last fetched
+  lastFetched: number;
   fetchProducts: (force?: boolean) => Promise<void>;
 }
 
@@ -18,7 +18,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
   fetchProducts: async (force = false) => {
     const { products, lastFetched, isLoading } = get();
     
-    // Cache Logic: If we have products and fetched less than 5 minutes ago, don't refetch
+    // If we have products and fetched less than 5 minutes ago, don't refetch
     const now = Date.now();
     const fiveMinutes = 5 * 60 * 1000;
     
@@ -26,7 +26,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
       return; 
     }
 
-    if (isLoading) return; // Prevent double fetching
+    if (isLoading) return;
 
     set({ isLoading: true });
 
@@ -34,7 +34,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
       const q = query(
         collection(db, "products"),
         orderBy("createdAt", "desc"),
-        limit(20) // Increased limit slightly
+        limit(20)
       );
       
       const querySnapshot = await getDocs(q);
