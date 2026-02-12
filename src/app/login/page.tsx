@@ -20,7 +20,7 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Enterprise Logic: Get return URL or default to home
+  // Get return URL or default to home
   const redirectUrl = searchParams.get("redirect") || "/";
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -93,7 +93,6 @@ function LoginForm() {
 
             <div className="text-center text-sm text-slate-500 mt-4">
               Don&apos;t have an account?{" "}
-              {/* Pass the redirect parameter to registration too if needed */}
               <Link href={`/register?redirect=${encodeURIComponent(redirectUrl)}`} className="text-blue-600 hover:underline font-medium">
                 Sign up
               </Link>
@@ -105,7 +104,6 @@ function LoginForm() {
   );
 }
 
-// Wrap in Suspense because we use useSearchParams()
 export default function LoginPage() {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-600" /></div>}>
