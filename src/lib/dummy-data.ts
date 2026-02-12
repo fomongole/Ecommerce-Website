@@ -17,7 +17,6 @@ export const PRODUCTS: Product[] = [
     name: "Ceramic Coffee Set",
     description: "Artisan-made ceramic pour-over set with matte black finish. Includes dripper, carafe, and two mugs.",
     price: 85.00,
-    // Swapped broken link for a working coffee set image
     images: ["https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=800"],
     category: "Home",
     stock: 8,
