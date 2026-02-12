@@ -30,7 +30,7 @@ export default function CheckoutPage() {
     setIsClient(true);
   }, []);
 
-  // 2. SECURITY CHECK: Redirect if not logged in
+  // 2. Redirect if not logged in
   useEffect(() => {
     if (!isLoading && !user) {
       toast.error("You must be logged in to checkout");
@@ -82,7 +82,7 @@ export default function CheckoutPage() {
         })),
         total: total,
         status: "pending",
-        userId: user.uid, // STRICT: No "guest" fallback
+        userId: user.uid,
         createdAt: Date.now(),
       };
 
@@ -109,7 +109,6 @@ export default function CheckoutPage() {
     }
   };
 
-  // 4. PREVENT FLASH: Show loader while checking auth
   if (!isClient || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
@@ -118,8 +117,6 @@ export default function CheckoutPage() {
     );
   }
 
-  // 5. If finished loading and no user, the useEffect will trigger redirect.
-  // Return null to ensure the restricted content never renders.
   if (!user) return null;
 
   if (items.length === 0) {
