@@ -31,7 +31,7 @@ export default function RegisterPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // 2. Update their Display Name (Firebase doesn't set this by default on create)
+      // 2. Update Display Name (Firebase doesn't set this by default on create)
       await updateProfile(user, {
         displayName: name,
       });
@@ -40,7 +40,7 @@ export default function RegisterPage() {
       setUser({ ...user, displayName: name });
 
       toast.success("Account created successfully!");
-      router.push("/"); // Redirect to home
+      router.push("/");
     } catch (error: any) {
       console.error(error);
       if (error.code === 'auth/email-already-in-use') {
