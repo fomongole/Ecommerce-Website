@@ -25,7 +25,7 @@ export function AdminGuard({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        // 3. STRICT CHECK: Check Firestore for User Role
+        // 3. Check Firestore for User Role
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
 
