@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react"; // Import useState
+import { useState } from "react";
 import { ShoppingBag, Search, Menu, User as UserIcon, LogOut, AlertTriangle } from "lucide-react";
 import { signOut } from "firebase/auth";
 import { toast } from "sonner";
@@ -31,7 +31,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"; // Import Alert Dialog Components
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Navbar() {
@@ -40,7 +40,6 @@ export function Navbar() {
   const { user } = useAuthStore();
   const router = useRouter();
   
-  // State for Search and Logout Dialog
   const [searchQuery, setSearchQuery] = useState("");
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
@@ -121,7 +120,7 @@ export function Navbar() {
                     <span>Profile</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  {/* Trigger Logout Dialog instead of immediate logout */}
+                  {/* Trigger Logout Dialog */}
                   <DropdownMenuItem 
                     onSelect={(e) => {
                       e.preventDefault(); // Prevent dropdown from closing immediately which might hide dialog
@@ -152,7 +151,7 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Logout Confirmation Dialog (Rendered outside header to avoid z-index issues) */}
+      {/* Logout Confirmation Dialog */}
       <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
